@@ -1,0 +1,6 @@
+tensorflow
+torch
+keras
+matplotlib
+plotly
+streamlit
