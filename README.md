@@ -1,2 +1,2 @@
-# nn-visualization
+# Neural Network Visualization
  
