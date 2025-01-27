@@ -68,6 +68,7 @@ elif option == 'Decision Boundaries':
         tf.keras.layers.Dense(10, activation = 'relu'),
         tf.keras.layers.Dense(1, activation = 'sigmoid')
     ])
+    
     model.compile(optimizer = 'adam', loss = 'binary_crossentropy', metrics = ['accuracy'])
     model.fit(X, y, epochs = 100, verbose = 0)
     plot_decision_boundary(model, X, y)
