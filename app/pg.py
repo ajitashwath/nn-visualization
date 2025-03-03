@@ -22,7 +22,7 @@ option = st.sidebar.selectbox("Choose a visualization", ["Architecture", "Activa
 st.sidebar.header("Hyperparameters")
 learning_rate = st.sidebar.slider("Learning Rate", 0.001, 0.1, 0.01, 0.001)
 batch_size = st.sidebar.slider("Batch Size", 16, 128, 32, 16)
-epochs = st.sidebar.slider.("Epochs", 1, 100, 10, 1)
+epochs = st.sidebar.slider("Epochs", 1, 100, 10, 1)
 
 model_type = st.sidebar.selectbox("Model Type", ["Simple Neural Network", "Convolutional Neural Network"])
 
@@ -43,7 +43,7 @@ if option == "Architecture":
             tf.keras.layers.MaxPooling2D((2, 2)),
             tf.keras.layers.Flatten(),
             tf.keras.layers.Dense(64, activation = 'relu'),
-            tf.keras.layers.Dense(64, activation = 'softmax')
+            tf.keras.layers.Dense(10, activation = 'softmax')
         ])
     else:
         st.warning("Please select a valid model type")
