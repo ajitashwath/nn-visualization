@@ -97,4 +97,4 @@ elif option == "Training Progress":
     visualizer = TrainingProcess()
     model.fit(X, y, epochs = epochs, batch_size = batch_size, callbacks = [visualizer])
 
-st.sidebar.write("Built by me.")
+st.sidebar.write("Built by Ajit.")
