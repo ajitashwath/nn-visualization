@@ -1,6 +1,5 @@
-tensorflow
-torch
-keras
-matplotlib
-plotly
 streamlit
+tensorflow
+numpy
+matplotlib
+scikit-learn
