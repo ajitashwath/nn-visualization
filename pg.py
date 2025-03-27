@@ -9,7 +9,6 @@ from main.training_process import TrainingProcess
 from sklearn.datasets import make_moons
 
 st.title("Neural Network Visualization Toolkit")
-
 st.title('''
          Welcome to the Neural Network Visualization Toolkit
          This app helps you visualize various aspects of neural
@@ -33,13 +32,13 @@ if option == "Architecture":
     st.header("Visualize Network Architecture")
     if model_type == 'Simple Neural Network':
         model = tf.keras.Sequential([
-            tf.keras.layers.Dense(64, activation = 'relu', input_shape = (784, )),
+            tf.keras.layers.Dense(64, activation = 'relu', input_shape = (784,)),
             tf.keras.layers.Dense(64, activation = 'relu'),
             tf.keras.layers.Dense(10, activation ='softmax')
         ])
     elif model_type == 'Convolutional Neural Network':
         model = tf.keras.Sequential([
-            tf.keras.layers.Conv2D(32, (3, 3), activation = 'relu', input_shapes = (28, 28, 1)),
+            tf.keras.layers.Conv2D(32, (3, 3), activation = 'relu', input_shape = (28, 28, 1)),
             tf.keras.layers.MaxPooling2D((2, 2)),
             tf.keras.layers.Flatten(),
             tf.keras.layers.Dense(64, activation = 'relu'),
@@ -48,6 +47,7 @@ if option == "Architecture":
     else:
         st.warning("Please select a valid model type")
     visualize_arch(model)
+
 
 elif option == "Activations":
     st.header("Visualize Activation Maps")
