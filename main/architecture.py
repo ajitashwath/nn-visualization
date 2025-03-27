@@ -1,10 +1,14 @@
 import tensorflow as tf
 from tensorflow.keras.utils import plot_model
 import matplotlib.pyplot as plt
+import streamlit as st
 
-def visualize_arch(model, file_name = "model_arch.png"):
-    plot_model(model, to_file = file_name, show_shapes = True, show_layer_names = True)
-    print(f"Model architecture saved to {file_name}")
+def visualize_arch(model):
+    try:
+        fig = tf.keras.utils.plot_model(model, show_shapes=True, show_layer_names=True, to_file='model.png')
+        st.image('model.png', caption='Neural Network Architecture')
+    except Exception as e:
+        st.error(f"Error visualizing architecture: {str(e)}")
 
 if __name__ == "__main__":
     model = tf.keras.Sequential([
