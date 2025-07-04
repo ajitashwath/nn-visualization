@@ -1,8 +1,8 @@
-import tensorflow as tf
+from keras.callbacks import Callback
 import matplotlib.pyplot as plt
 import streamlit as st
 
-class TrainingProcess(tf.keras.callbacks.Callback):
+class TrainingProcess(Callback):
     def __init__(self):
         super().__init__()
         self.losses = []
@@ -10,9 +10,10 @@ class TrainingProcess(tf.keras.callbacks.Callback):
         self.placeholder = st.empty()
 
     def on_epoch_end(self, epoch, logs=None):
-        self.losses.append(logs['loss'])
-        self.accuracies.append(logs['accuracy'])
-        self.plot_progress()
+        if logs is not None:
+            self.losses.append(logs.get('loss', None))
+            self.accuracies.append(logs.get('accuracy', None))
+            self.plot_progress()
 
     def plot_progress(self):
         try:

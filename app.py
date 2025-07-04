@@ -7,6 +7,9 @@ from main.decision_boundaries import plot_decision_boundary
 from main.gradients import visualize_grad
 from main.training_process import TrainingProcess
 from sklearn.datasets import make_moons
+from keras.models import Sequential
+from keras.layers import Dense, Conv2D, MaxPooling2D, Flatten
+from keras.applications import VGG16
 
 st.title("Neural Network Visualization Toolkit")
 st.write("""
@@ -36,18 +39,18 @@ y_sample = tf.random.uniform((batch_size,), maxval=10, dtype=tf.int32)
 if option == "Architecture":
     st.header("Visualize Network Architecture")
     if model_type == 'Simple Neural Network':
-        model = tf.keras.Sequential([
-            tf.keras.layers.Dense(64, activation='relu', input_shape=(784,)),
-            tf.keras.layers.Dense(64, activation='relu'),
-            tf.keras.layers.Dense(10, activation='softmax')
+        model = Sequential([
+            Dense(64, activation='relu', input_shape=(784,)),
+            Dense(64, activation='relu'),
+            Dense(10, activation='softmax')
         ])
     elif model_type == 'Convolutional Neural Network':
-        model = tf.keras.Sequential([
-            tf.keras.layers.Conv2D(32, (3, 3), activation='relu', input_shape=(28, 28, 1)),
-            tf.keras.layers.MaxPooling2D((2, 2)),
-            tf.keras.layers.Flatten(),
-            tf.keras.layers.Dense(64, activation='relu'),
-            tf.keras.layers.Dense(10, activation='softmax')
+        model = Sequential([
+            Conv2D(32, (3, 3), activation='relu', input_shape=(28, 28, 1)),
+            MaxPooling2D((2, 2)),
+            Flatten(),
+            Dense(64, activation='relu'),
+            Dense(10, activation='softmax')
         ])
     else:
         st.error("Please select a valid model type")
@@ -59,7 +62,7 @@ elif option == "Activations":
     if model_type == "Simple Neural Network":
         st.warning("This visualization is only available for Convolutional Neural Networks")
     elif model_type == 'Convolutional Neural Network':
-        model = tf.keras.applications.VGG16(weights='imagenet', include_top=False)
+        model = VGG16(weights='imagenet', include_top=False)
         input_data = tf.random.normal((1, 224, 224, 3))
         visualize_act(model, input_data, 'block1_conv1')
     else:
@@ -68,37 +71,37 @@ elif option == "Activations":
 elif option == 'Decision Boundaries':
     st.header("Visualize Decision Boundaries")
     X, y = make_moons(n_samples=1000, noise=0.2, random_state=42)
-    model = tf.keras.Sequential([
-        tf.keras.layers.Dense(10, activation='relu', input_shape=(2,)),
-        tf.keras.layers.Dense(10, activation='relu'),
-        tf.keras.layers.Dense(1, activation='sigmoid')
+    model = Sequential([
+        Dense(10, activation='relu', input_shape=(2,)),
+        Dense(10, activation='relu'),
+        Dense(1, activation='sigmoid')
     ])
     model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
-    model.fit(X, y, epochs=100, batch_size=32, verbose=0)
+    model.fit(X, y, epochs=100, batch_size=32, verbose="0")
     plot_decision_boundary(model, X, y)
 
 elif option == "Gradients":
     st.header("Visualize Gradients")
-    model = tf.keras.Sequential([
-        tf.keras.layers.Dense(64, activation='relu', input_shape=(784,)),
-        tf.keras.layers.Dense(64, activation='relu'),
-        tf.keras.layers.Dense(10, activation='softmax')
+    model = Sequential([
+        Dense(64, activation='relu', input_shape=(784,)),
+        Dense(64, activation='relu'),
+        Dense(10, activation='softmax')
     ])
     visualize_grad(model, X_sample, y_sample)
 
 elif option == "Training Progress":
     st.header("Visualize Training Progress")
-    model = tf.keras.Sequential([
-        tf.keras.layers.Dense(64, activation='relu', input_shape=(784,)),
-        tf.keras.layers.Dense(64, activation='relu'),
-        tf.keras.layers.Dense(10, activation='softmax')
+    model = Sequential([
+        Dense(64, activation='relu', input_shape=(784,)),
+        Dense(64, activation='relu'),
+        Dense(10, activation='softmax')
     ])
-    model.compile(optimizer=tf.keras.optimizers.Adam(learning_rate=learning_rate),
+    model.compile(optimizer='adam',
                  loss='sparse_categorical_crossentropy',
                  metrics=['accuracy'])
     X = tf.random.normal((1000, 784))
     y = tf.random.uniform((1000,), maxval=10, dtype=tf.int32)
     visualizer = TrainingProcess()
-    model.fit(X, y, epochs=epochs, batch_size=batch_size, callbacks=[visualizer], verbose=0)
+    model.fit(X, y, epochs=epochs, batch_size=batch_size, callbacks=[visualizer], verbose="0")
 
 st.sidebar.write("Built by Ajit.")

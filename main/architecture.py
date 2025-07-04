@@ -1,5 +1,7 @@
-import tensorflow as tf
-from tensorflow.keras.utils import plot_model
+import keras
+from keras.utils import plot_model
+from keras.models import Sequential
+from keras.layers import Dense
 import matplotlib.pyplot as plt
 import streamlit as st
 
@@ -11,9 +13,9 @@ def visualize_arch(model):
         st.error(f"Error visualizing architecture: {str(e)}")
 
 if __name__ == "__main__":
-    model = tf.keras.Sequential([
-        tf.keras.layers.Dense(64, activation = 'relu', input_shape = (784, )),
-        tf.keras.layers.Dense(64, activation = 'relu'),
-        tf.keras.layers.Dense(10, activation = 'softmax')
+    model = Sequential([
+        Dense(64, activation = 'relu', input_shape = (784, )),
+        Dense(64, activation = 'relu'),
+        Dense(10, activation = 'softmax')
     ])
     visualize_arch(model)

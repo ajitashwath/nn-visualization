@@ -1,4 +1,5 @@
 import tensorflow as tf
+import keras
 import matplotlib.pyplot as plt
 import streamlit as st
 
@@ -6,9 +7,10 @@ def visualize_grad(model, X, y):
     try:
         with tf.GradientTape() as tape:
             predictions = model(X)
-            loss = tf.keras.losses.sparse_categorical_crossentropy(y, predictions)
+            loss = keras.losses.sparse_categorical_crossentropy(y, predictions)
         gradients = tape.gradient(loss, model.trainable_variables)
-
+        if gradients is None:
+            gradients = []
         fig = plt.figure(figsize=(10, 6))
         for i, grad in enumerate(gradients):
             if grad is not None:
